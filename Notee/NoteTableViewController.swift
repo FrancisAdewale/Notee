@@ -6,44 +6,93 @@
 //
 
 import UIKit
+import CoreData
 
 class NoteTableViewController: UITableViewController {
+    
+    var itemArray = [Item]()
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var selectedCategory: Category? {
+        didSet{
+            loadItems()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return itemArray.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let item = itemArray[indexPath.row]
+        cell.textLabel?.text = item.text
 
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
 
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
+    
+   
+    @IBAction func addNotePressed(_ sender: UIBarButtonItem) {
+        var textfield = UITextField()
+        
+        let alert = UIAlertController(title: "Add A Note", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Note", style: .default) { (alertAction) in
+            
+            let newItem = Item(context: self.context)
+            newItem.text = textfield.text!
+            newItem.parentCategory = self.selectedCategory
+            self.itemArray.append(newItem)
+            self.saveItem()
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create Category"
+            textfield = alertTextField
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func saveItem() {
+        do {
+            try context.save()
+        } catch {
+            print("Could not save \(error)")
+        }
+        self.tableView.reloadData()
+    }
+    
+    func loadItems() {
+        let predicate = NSPredicate(format:"parentCategory.name MATCHES %@", selectedCategory!.name!)
+        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+        fetchRequest.predicate = predicate
+        
+        do {
+            itemArray = try context.fetch(fetchRequest)
+        } catch {
+            print("Can't fetch results \(error)")
+        }
+    }
+    
+
+
+
     
 
 }
