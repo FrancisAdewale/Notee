@@ -7,8 +7,9 @@
 
 import UIKit
 import CoreData
+import SwipeCellKit
 
-class CategoryTableViewController: UITableViewController {
+class CategoryTableViewController: SwipeCellViewController {
     
     
     
@@ -19,6 +20,8 @@ class CategoryTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.rowHeight = 80.0
         
         loadCategories()
     
@@ -38,7 +41,7 @@ class CategoryTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         let category = categoryArray[indexPath.row]
         cell.textLabel?.text = category.name
@@ -48,9 +51,8 @@ class CategoryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToNote", sender: self)
         
-        
-        
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! NoteTableViewController
@@ -58,12 +60,38 @@ class CategoryTableViewController: UITableViewController {
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedCategory = categoryArray[indexPath.row]
         }
+    }
+    
+    
+    func saveCategory(){
         
+        do {
+            try context.save()
+        } catch {
+            print("Could not save \(error)")
+        }
         
+        self.tableView.reloadData()
         
     }
     
+    func loadCategories() {
+        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
 
+        do {
+            categoryArray = try context.fetch(fetchRequest)
+            
+        } catch {
+            print("Can't fetch results \(error)")
+        }
+        
+    }
+    
+    override func updateModel(at indexPath: IndexPath) {
+            self.context.delete(self.categoryArray[indexPath.row])
+            self.categoryArray.remove(at: indexPath.row)
+    }
+    
     
     @IBAction func addCategory(_ sender: UIBarButtonItem) {
         
@@ -89,30 +117,6 @@ class CategoryTableViewController: UITableViewController {
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
-    }
-    
-    func saveCategory(){
-        
-        do {
-            try context.save()
-        } catch {
-            print("Could not save \(error)")
-        }
-        
-        self.tableView.reloadData()
-        
-    }
-    
-    func loadCategories() {
-        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
-
-        do {
-            categoryArray = try context.fetch(fetchRequest)
-            
-        } catch {
-            print("Can't fetch results \(error)")
-        }
-        
     }
     
     

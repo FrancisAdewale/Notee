@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,7 +14,9 @@
 		768741282541DF4D009AD6DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 768741272541DF4D009AD6DF /* Assets.xcassets */; };
 		7687412B2541DF4D009AD6DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 768741292541DF4D009AD6DF /* LaunchScreen.storyboard */; };
 		768741352541DF6A009AD6DF /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768741342541DF6A009AD6DF /* CategoryTableViewController.swift */; };
+		768FBBDA2543210800A881D2 /* SwipeCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768FBBD92543210800A881D2 /* SwipeCellViewController.swift */; };
 		76E1284D2542E5D4000989DE /* NoteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1284C2542E5D4000989DE /* NoteTableViewController.swift */; };
+		BB9AE1E2E8B69F94DE81FF85 /* Pods_Notee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA1D06D7B724ABA9769B47C3 /* Pods_Notee.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +29,11 @@
 		7687412A2541DF4D009AD6DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7687412C2541DF4D009AD6DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		768741342541DF6A009AD6DF /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
+		768FBBD92543210800A881D2 /* SwipeCellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeCellViewController.swift; sourceTree = "<group>"; };
 		76E1284C2542E5D4000989DE /* NoteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewController.swift; sourceTree = "<group>"; };
+		772FB108D570C358F1C4661D /* Pods-Notee.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notee.release.xcconfig"; path = "Target Support Files/Pods-Notee/Pods-Notee.release.xcconfig"; sourceTree = "<group>"; };
+		DFF7A5D2874D5725514C6666 /* Pods-Notee.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notee.debug.xcconfig"; path = "Target Support Files/Pods-Notee/Pods-Notee.debug.xcconfig"; sourceTree = "<group>"; };
+		EA1D06D7B724ABA9769B47C3 /* Pods_Notee.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Notee.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +41,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB9AE1E2E8B69F94DE81FF85 /* Pods_Notee.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		661EC3CEEF812B923C6E4EB7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EA1D06D7B724ABA9769B47C3 /* Pods_Notee.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7687410F2541DF4D009AD6DF = {
 			isa = PBXGroup;
 			children = (
 				7687411A2541DF4D009AD6DF /* Notee */,
 				768741192541DF4D009AD6DF /* Products */,
+				79C866A77F716F7AE6648FDA /* Pods */,
+				661EC3CEEF812B923C6E4EB7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +79,7 @@
 			children = (
 				768741342541DF6A009AD6DF /* CategoryTableViewController.swift */,
 				76E1284C2542E5D4000989DE /* NoteTableViewController.swift */,
+				768FBBD92543210800A881D2 /* SwipeCellViewController.swift */,
 				7687411B2541DF4D009AD6DF /* AppDelegate.swift */,
 				7687411D2541DF4D009AD6DF /* SceneDelegate.swift */,
 				768741212541DF4D009AD6DF /* Main.storyboard */,
@@ -73,6 +91,15 @@
 			path = Notee;
 			sourceTree = "<group>";
 		};
+		79C866A77F716F7AE6648FDA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DFF7A5D2874D5725514C6666 /* Pods-Notee.debug.xcconfig */,
+				772FB108D570C358F1C4661D /* Pods-Notee.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -80,9 +107,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7687412F2541DF4D009AD6DF /* Build configuration list for PBXNativeTarget "Notee" */;
 			buildPhases = (
+				EDC1965B33DD5830E007800F /* [CP] Check Pods Manifest.lock */,
 				768741142541DF4D009AD6DF /* Sources */,
 				768741152541DF4D009AD6DF /* Frameworks */,
 				768741162541DF4D009AD6DF /* Resources */,
+				E53A1CA3540364BCCC6F10DA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -138,6 +167,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		E53A1CA3540364BCCC6F10DA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Notee/Pods-Notee-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Notee/Pods-Notee-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Notee/Pods-Notee-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EDC1965B33DD5830E007800F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Notee-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		768741142541DF4D009AD6DF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -146,6 +217,7 @@
 				76E1284D2542E5D4000989DE /* NoteTableViewController.swift in Sources */,
 				768741262541DF4D009AD6DF /* Notee.xcdatamodeld in Sources */,
 				7687411C2541DF4D009AD6DF /* AppDelegate.swift in Sources */,
+				768FBBDA2543210800A881D2 /* SwipeCellViewController.swift in Sources */,
 				7687411E2541DF4D009AD6DF /* SceneDelegate.swift in Sources */,
 				768741352541DF6A009AD6DF /* CategoryTableViewController.swift in Sources */,
 			);
@@ -291,6 +363,7 @@
 		};
 		768741302541DF4D009AD6DF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DFF7A5D2874D5725514C6666 /* Pods-Notee.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -310,6 +383,7 @@
 		};
 		768741312541DF4D009AD6DF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 772FB108D570C358F1C4661D /* Pods-Notee.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

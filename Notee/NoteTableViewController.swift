@@ -7,8 +7,9 @@
 
 import UIKit
 import CoreData
+import SwipeCellKit
 
-class NoteTableViewController: UITableViewController {
+class NoteTableViewController: SwipeCellViewController {
     
     var itemArray = [Item]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -20,6 +21,7 @@ class NoteTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = selectedCategory?.name
     
     }
 
@@ -33,7 +35,8 @@ class NoteTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         let item = itemArray[indexPath.row]
         cell.textLabel?.text = item.text
 
@@ -57,6 +60,7 @@ class NoteTableViewController: UITableViewController {
             let newItem = Item(context: self.context)
             newItem.text = textfield.text!
             newItem.parentCategory = self.selectedCategory
+            newItem.date = Date()
             self.itemArray.append(newItem)
             self.saveItem()
         }
@@ -68,6 +72,12 @@ class NoteTableViewController: UITableViewController {
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
+    
+    override func updateModel(at indexPath: IndexPath) {
+            self.context.delete(self.itemArray[indexPath.row])
+            self.itemArray.remove(at: indexPath.row)
+    }
+    
     
     func saveItem() {
         do {
@@ -89,6 +99,8 @@ class NoteTableViewController: UITableViewController {
             print("Can't fetch results \(error)")
         }
     }
+    
+    
     
 
 
