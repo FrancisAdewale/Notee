@@ -8,6 +8,8 @@
 import UIKit
 import SwipeCellKit
 
+
+
 class SwipeCellViewController: UITableViewController, SwipeTableViewCellDelegate {
     
     var cell: UITableViewCell?
@@ -58,3 +60,5 @@ class SwipeCellViewController: UITableViewController, SwipeTableViewCellDelegate
     
 
 }
+
+

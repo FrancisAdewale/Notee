@@ -9,8 +9,9 @@ import UIKit
 import CoreData
 import SwipeCellKit
 
+
 class NoteTableViewController: SwipeCellViewController {
-    
+            
     var itemArray = [Item]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var selectedCategory: Category? {
@@ -33,12 +34,13 @@ class NoteTableViewController: SwipeCellViewController {
         return itemArray.count
     }
 
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         let item = itemArray[indexPath.row]
         cell.textLabel?.text = item.text
+        cell.accessoryType = .detailButton
 
         return cell
     }
@@ -46,6 +48,20 @@ class NoteTableViewController: SwipeCellViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
+
+    }
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        
+        let alert = UIAlertController(title: "Date Posted", message: "\(itemArray[indexPath.row].date!)", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Dismiss", style: .cancel) { (alertAction) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
 
     }
     
@@ -60,7 +76,10 @@ class NoteTableViewController: SwipeCellViewController {
             let newItem = Item(context: self.context)
             newItem.text = textfield.text!
             newItem.parentCategory = self.selectedCategory
+            
+            let dateFormatter = DateFormatter()
             newItem.date = Date()
+        
             self.itemArray.append(newItem)
             self.saveItem()
         }
