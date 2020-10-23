@@ -14,6 +14,7 @@
 		768741282541DF4D009AD6DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 768741272541DF4D009AD6DF /* Assets.xcassets */; };
 		7687412B2541DF4D009AD6DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 768741292541DF4D009AD6DF /* LaunchScreen.storyboard */; };
 		768741352541DF6A009AD6DF /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768741342541DF6A009AD6DF /* CategoryTableViewController.swift */; };
+		76E1284D2542E5D4000989DE /* NoteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1284C2542E5D4000989DE /* NoteTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		7687412A2541DF4D009AD6DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7687412C2541DF4D009AD6DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		768741342541DF6A009AD6DF /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
+		76E1284C2542E5D4000989DE /* NoteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				768741342541DF6A009AD6DF /* CategoryTableViewController.swift */,
+				76E1284C2542E5D4000989DE /* NoteTableViewController.swift */,
 				7687411B2541DF4D009AD6DF /* AppDelegate.swift */,
 				7687411D2541DF4D009AD6DF /* SceneDelegate.swift */,
 				768741212541DF4D009AD6DF /* Main.storyboard */,
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76E1284D2542E5D4000989DE /* NoteTableViewController.swift in Sources */,
 				768741262541DF4D009AD6DF /* Notee.xcdatamodeld in Sources */,
 				7687411C2541DF4D009AD6DF /* AppDelegate.swift in Sources */,
 				7687411E2541DF4D009AD6DF /* SceneDelegate.swift in Sources */,
