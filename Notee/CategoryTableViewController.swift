@@ -46,6 +46,7 @@ class CategoryTableViewController: SwipeCellViewController {
         
         let category = categoryArray[indexPath.row]
         cell.textLabel?.text = category.name
+        cell.backgroundColor = .darkGray
         return cell
     }
     
