@@ -7,22 +7,36 @@
 
 import UIKit
 import CoreData
-import SwipeCellKit
+import Speech
 
-
-class NoteTableViewController: SwipeCellViewController {
-            
+class NoteTableViewController: SwipeCellViewController, SFSpeechRecognizerDelegate
+{
+    //MARK: - Properties
     var itemArray = [Item]()
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     var selectedCategory: Category? {
         didSet{
             loadItems()
         }
     }
+    
+    
+    private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-UK"))!
+    
+    private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
+    
+    private var recognitionTask: SFSpeechRecognitionTask?
+    
+    private let audioEngine = AVAudioEngine()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         navigationItem.title = selectedCategory?.name
+        speechRecognizer.delegate = self
+
     
     }
 
@@ -45,11 +59,14 @@ class NoteTableViewController: SwipeCellViewController {
         return cell
     }
     
+    //MARK: - Table View Delegate Methods
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
 
     }
+    
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         
@@ -66,35 +83,60 @@ class NoteTableViewController: SwipeCellViewController {
     }
     
    
+    //MARK: - IB Actions
     @IBAction func addNotePressed(_ sender: UIBarButtonItem) {
+        
+        
         var textfield = UITextField()
         
-        let alert = UIAlertController(title: "Add A Note", message: "", preferredStyle: .alert)
+        let actionSheet = UIAlertController(title: "Select Option", message: "", preferredStyle: .actionSheet)
         
-        let action = UIAlertAction(title: "Add Note", style: .default) { (alertAction) in
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel) { (cancelAction) in
             
-            let newItem = Item(context: self.context)
-            newItem.text = textfield.text!
-            newItem.parentCategory = self.selectedCategory
-            
-            let dateFormatter = DateFormatter()
-            newItem.date = Date()
-        
-            self.itemArray.append(newItem)
-            self.saveItem()
         }
         
-        alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Create Category"
-            textfield = alertTextField
+        let noteAction = UIAlertAction(title: "Write Note", style: .default) { (alertAction) in
+            
+            let alert = UIAlertController(title: "Write a note", message: "", preferredStyle: .alert)
+            
+            let action = UIAlertAction(title: "Add", style: .default) { (alertAction) in
+                let newItem = Item(context: self.context)
+                newItem.text = textfield.text!
+                newItem.parentCategory = self.selectedCategory
+                newItem.date = Date()
+
+                self.itemArray.append(newItem)
+                self.saveItem()
+            }
+            
+            alert.addTextField { (alertTextField) in
+                alertTextField.placeholder = "Create Category"
+                textfield = alertTextField
+            }
+            
+            
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
         }
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
+        
+        let recordAction = UIAlertAction(title: "Record Note", style: .default) { (recordAction) in
+            recordAction.isEnabled
+        }
+        
+        actionSheet.addAction(noteAction)
+        actionSheet.addAction(cancelButton)
+        actionSheet.addAction(recordAction)
+        
+        present(actionSheet, animated: true, completion: nil)
+       
     }
+    
+    //MARK: - Data Manipulation
     
     override func updateModel(at indexPath: IndexPath) {
             self.context.delete(self.itemArray[indexPath.row])
             self.itemArray.remove(at: indexPath.row)
+        
     }
     
     
@@ -119,11 +161,4 @@ class NoteTableViewController: SwipeCellViewController {
         }
     }
     
-    
-    
-
-
-
-    
-
 }
