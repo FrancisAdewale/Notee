@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-Notee/Pods-Notee-frameworks.sh
+${BUILT_PRODUCTS_DIR}/NRSpeechToText/NRSpeechToText.framework
 ${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework

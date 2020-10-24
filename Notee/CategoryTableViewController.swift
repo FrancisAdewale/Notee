@@ -27,7 +27,6 @@ class CategoryTableViewController: SwipeCellViewController {
     
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
-        
         }
 
     // MARK: - Table view data source

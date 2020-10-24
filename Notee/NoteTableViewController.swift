@@ -7,11 +7,13 @@
 
 import UIKit
 import CoreData
-import Speech
+import NRSpeechToText
 
-class NoteTableViewController: SwipeCellViewController, SFSpeechRecognizerDelegate
-{
+class NoteTableViewController: SwipeCellViewController {
+    
+    
     //MARK: - Properties
+    
     var itemArray = [Item]()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -22,40 +24,31 @@ class NoteTableViewController: SwipeCellViewController, SFSpeechRecognizerDelega
         }
     }
     
-    
-    private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-UK"))!
-    
-    private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
-    
-    private var recognitionTask: SFSpeechRecognitionTask?
-    
-    private let audioEngine = AVAudioEngine()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         navigationItem.title = selectedCategory?.name
-        speechRecognizer.delegate = self
-
-    
+        
+        
     }
-
+    
+    
     // MARK: - Table view data source
-
-
+    
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return itemArray.count
     }
-
-
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         let item = itemArray[indexPath.row]
         cell.textLabel?.text = item.text
         cell.accessoryType = .detailButton
-
+        
         return cell
     }
     
@@ -64,7 +57,7 @@ class NoteTableViewController: SwipeCellViewController, SFSpeechRecognizerDelega
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
-
+        
     }
     
     
@@ -79,10 +72,10 @@ class NoteTableViewController: SwipeCellViewController, SFSpeechRecognizerDelega
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
-
+        
     }
     
-   
+    
     //MARK: - IB Actions
     @IBAction func addNotePressed(_ sender: UIBarButtonItem) {
         
@@ -104,7 +97,7 @@ class NoteTableViewController: SwipeCellViewController, SFSpeechRecognizerDelega
                 newItem.text = textfield.text!
                 newItem.parentCategory = self.selectedCategory
                 newItem.date = Date()
-
+                
                 self.itemArray.append(newItem)
                 self.saveItem()
             }
@@ -113,14 +106,24 @@ class NoteTableViewController: SwipeCellViewController, SFSpeechRecognizerDelega
                 alertTextField.placeholder = "Create Category"
                 textfield = alertTextField
             }
-            
-            
+
             alert.addAction(action)
             self.present(alert, animated: true, completion: nil)
         }
         
-        let recordAction = UIAlertAction(title: "Record Note", style: .default) { (recordAction) in
-            recordAction.isEnabled
+        let recordAction = UIAlertAction(title: "Record Note", style: .default) { (recordActionButton) in
+            
+            
+            NRSpeechToText.shared.authorizePermission { (authorize) in
+                if authorize {
+                    if NRSpeechToText.shared.isRunning {
+                        NRSpeechToText.shared.stop()
+                    }
+                    else {
+                        self.startRecording()
+                    }
+                }
+            }
         }
         
         actionSheet.addAction(noteAction)
@@ -128,14 +131,33 @@ class NoteTableViewController: SwipeCellViewController, SFSpeechRecognizerDelega
         actionSheet.addAction(recordAction)
         
         present(actionSheet, animated: true, completion: nil)
-       
+        
     }
     
+    func startRecording() {
+        let newItem = Item(context: self.context)
+
+        NRSpeechToText.shared.startRecording {(result: String?, isFinal: Bool, error: Error?) in
+            
+            if error == nil {
+                
+                if let text = result {
+                    newItem.text = String(text)
+                }
+                self.itemArray.append(newItem)
+            }
+            
+            self.saveItem()
+        }
+        
+
+    
+    }
     //MARK: - Data Manipulation
     
     override func updateModel(at indexPath: IndexPath) {
-            self.context.delete(self.itemArray[indexPath.row])
-            self.itemArray.remove(at: indexPath.row)
+        self.context.delete(self.itemArray[indexPath.row])
+        self.itemArray.remove(at: indexPath.row)
         
     }
     
@@ -146,7 +168,10 @@ class NoteTableViewController: SwipeCellViewController, SFSpeechRecognizerDelega
         } catch {
             print("Could not save \(error)")
         }
-        self.tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+
+        }
     }
     
     func loadItems() {
@@ -161,4 +186,7 @@ class NoteTableViewController: SwipeCellViewController, SFSpeechRecognizerDelega
         }
     }
     
+    
+    
+
 }

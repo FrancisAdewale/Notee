@@ -1,16 +1,20 @@
 PODS:
+  - NRSpeechToText (1.0.0)
   - SwipeCellKit (2.7.1)
 
 DEPENDENCIES:
+  - NRSpeechToText
   - SwipeCellKit
 
 SPEC REPOS:
   trunk:
+    - NRSpeechToText
     - SwipeCellKit
 
 SPEC CHECKSUMS:
+  NRSpeechToText: 93b0835094319438db63e0d82899364bc0f9bba3
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
 
-PODFILE CHECKSUM: eba3f8712df4c5bfea9fb94298f5c77bd289f870
+PODFILE CHECKSUM: 89cdf266326048c2775db20dddb4cfad5b426971
 
 COCOAPODS: 1.9.3

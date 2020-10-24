@@ -6,5 +6,6 @@ target 'Notee' do
   # Pods for Notee
 
 pod 'SwipeCellKit'
+pod "NRSpeechToText"
 
 end
