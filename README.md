@@ -21,6 +21,8 @@ I am new to Swift and an intermediate programmer. I am basically starting from e
 
 [![Screenshot-2020-10-26-at-17-33-11.png](https://i.postimg.cc/w3KswKgG/Screenshot-2020-10-26-at-17-33-11.png)](https://postimg.cc/30BRwcyX)
 
+[![Screenshot-2020-10-26-at-17-43-44.png](https://i.postimg.cc/1XxyVy94/Screenshot-2020-10-26-at-17-43-44.png)](https://postimg.cc/N9x3Wq2w)
+
 [![Screenshot-2020-10-26-at-17-36-22.png](https://i.postimg.cc/qqN58KvG/Screenshot-2020-10-26-at-17-36-22.png)](https://postimg.cc/BPGp3XD8)
 
 [![Screenshot-2020-10-26-at-17-38-06.png](https://i.postimg.cc/kXKdzr7v/Screenshot-2020-10-26-at-17-38-06.png)](https://postimg.cc/JGrgH2Ds)
