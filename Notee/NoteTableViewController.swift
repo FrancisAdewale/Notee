@@ -55,7 +55,6 @@ class NoteTableViewController: SwipeCellViewController {
     //MARK: - Table View Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
@@ -121,6 +120,10 @@ class NoteTableViewController: SwipeCellViewController {
                     }
                     else {
                         self.startRecording()
+                        DispatchQueue.main.async {
+                            self.navigationItem.title = "Start Recording"
+
+                        }
                     }
                 }
             }
@@ -135,6 +138,7 @@ class NoteTableViewController: SwipeCellViewController {
     }
     
     func startRecording() {
+        var textArray = [String]()
         let newItem = Item(context: self.context)
 
         NRSpeechToText.shared.startRecording {(result: String?, isFinal: Bool, error: Error?) in
@@ -142,7 +146,10 @@ class NoteTableViewController: SwipeCellViewController {
             if error == nil {
                 
                 if let text = result {
-                    newItem.text = String(text)
+                    textArray.append(text)
+                    newItem.text = textArray[textArray.count - 1]
+                    newItem.parentCategory = self.selectedCategory
+                    newItem.date = Date()
                 }
                 self.itemArray.append(newItem)
             }
@@ -156,9 +163,11 @@ class NoteTableViewController: SwipeCellViewController {
     //MARK: - Data Manipulation
     
     override func updateModel(at indexPath: IndexPath) {
-        self.context.delete(self.itemArray[indexPath.row])
-        self.itemArray.remove(at: indexPath.row)
         
+        context.delete(itemArray[indexPath.row])
+        itemArray.remove(at: indexPath.row)
+        self.saveItem()
+
     }
     
     

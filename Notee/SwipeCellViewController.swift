@@ -23,6 +23,8 @@ class SwipeCellViewController: UITableViewController, SwipeTableViewCellDelegate
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! SwipeTableViewCell
         cell.delegate = self
+        cell.textLabel!.numberOfLines = 0;
+
         return cell
     }
     
@@ -41,9 +43,6 @@ class SwipeCellViewController: UITableViewController, SwipeTableViewCellDelegate
         return [deleteAction]
     }
     
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        
-    }
     
     
     func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
