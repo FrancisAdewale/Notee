@@ -31,8 +31,6 @@ UIKit
 NRSpeechToText
 SwipeCellKit
 
-<b>Built with</b>
-- [Electron](https://electron.atom.io)
 
 ## Features
 You can record a note without using the keyboard included micrphone option. It is basically a lazier/quicker way to get your note recorded. 
