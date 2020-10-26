@@ -8,8 +8,6 @@
 import UIKit
 import SwipeCellKit
 
-
-
 class SwipeCellViewController: UITableViewController, SwipeTableViewCellDelegate {
     
     var cell: UITableViewCell?
@@ -19,10 +17,9 @@ class SwipeCellViewController: UITableViewController, SwipeTableViewCellDelegate
 
     }
     
-
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! SwipeTableViewCell
-        cell.delegate = self
+        cell.delegate = self // SwipeTableViewCellDelegate
         cell.textLabel!.numberOfLines = 0;
 
         return cell
@@ -30,20 +27,16 @@ class SwipeCellViewController: UITableViewController, SwipeTableViewCellDelegate
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         
-        guard orientation == .right else { return nil }
+        guard orientation == .right else { return nil } //slide from right to left to activate
         
         let deleteAction = SwipeAction(style: .destructive, title: "Bin It") { (swipeAction, indexPath) in
             
             self.updateModel(at: indexPath)
         }
-        
         deleteAction.image = UIImage(named: "delete-icon")
-        
         
         return [deleteAction]
     }
-    
-    
     
     func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
         var options = SwipeOptions()
@@ -54,10 +47,6 @@ class SwipeCellViewController: UITableViewController, SwipeTableViewCellDelegate
     func updateModel(at indexPath: IndexPath) {
         //
     }
-    
-   
-    
-
 }
 
 

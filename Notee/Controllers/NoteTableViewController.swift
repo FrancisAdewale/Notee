@@ -17,6 +17,8 @@ class NoteTableViewController: SwipeCellViewController {
     
     var itemArray = [Item]()
     
+    
+    //C IN CRUF
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var selectedCategory: Category? {
@@ -27,11 +29,7 @@ class NoteTableViewController: SwipeCellViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
         navigationItem.title = selectedCategory?.name
-        
         stopRecording.style = .plain
     }
     
@@ -52,8 +50,6 @@ class NoteTableViewController: SwipeCellViewController {
         cell.textLabel?.text = item.text
         cell.accessoryType = .detailButton
         
-        
-        
         return cell
     }
     
@@ -63,7 +59,6 @@ class NoteTableViewController: SwipeCellViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
-    
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         
@@ -76,7 +71,6 @@ class NoteTableViewController: SwipeCellViewController {
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
-        
     }
     
     
@@ -101,7 +95,7 @@ class NoteTableViewController: SwipeCellViewController {
                 newItem.text = textfield.text!
                 newItem.parentCategory = self.selectedCategory
                 newItem.date = Date()
-                
+                //R IN CRUD
                 self.itemArray.append(newItem)
                 self.saveItem()
             }
@@ -119,6 +113,8 @@ class NoteTableViewController: SwipeCellViewController {
             
             self.stopRecording.style = .done
             
+            
+            //starts recording if NRSpeechToText is currently not running
             NRSpeechToText.shared.authorizePermission { (authorize) in
                 if authorize {
                     if NRSpeechToText.shared.isRunning {
@@ -143,23 +139,21 @@ class NoteTableViewController: SwipeCellViewController {
         
     }
     
-    
     @IBAction func stopRecordingPressed(_ sender: UIBarButtonItem) {
         if NRSpeechToText.shared.isRunning {
             NRSpeechToText.shared.stop()
         }
         loadItems()
-        
         navigationItem.title = selectedCategory?.name
-        
     }
     
+    //MARK: - NRSpeechToText Method
     func startRecording() {
         var textArray = [String]()
         let newItem = Item(context: self.context)
 
         NRSpeechToText.shared.startRecording {(result: String?, isFinal: Bool, error: Error?) in
-            
+            //converts speech to text
             if error == nil {
                 
                 if let text = result {
@@ -170,30 +164,26 @@ class NoteTableViewController: SwipeCellViewController {
                     newItem.date = Date()
                 }
             }
-            //self.itemArray.append(newItem)
-
             self.saveItem()
             self.tableView.reloadData()
 
         }
-        
-
-    
     }
     //MARK: - Data Manipulation
     
     override func updateModel(at indexPath: IndexPath) {
         
-        context.delete(itemArray[indexPath.row])
+        context.delete(itemArray[indexPath.row]) //D In CRUD
         itemArray.remove(at: indexPath.row)
-        self.saveItem()
+        saveItem()
+
 
     }
     
     
     func saveItem() {
         do {
-            try context.save()
+            try context.save() //U In CRUD
         } catch {
             print("Could not save \(error)")
         }
@@ -214,8 +204,4 @@ class NoteTableViewController: SwipeCellViewController {
             print("Can't fetch results \(error)")
         }
     }
-    
-    
-    
-
 }

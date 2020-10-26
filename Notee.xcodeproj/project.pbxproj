@@ -56,6 +56,31 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		765A88EE25472512003D945A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				76E1284C2542E5D4000989DE /* NoteTableViewController.swift */,
+				768741342541DF6A009AD6DF /* CategoryTableViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		765A88F02547252A003D945A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				768741212541DF4D009AD6DF /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		765A88F12547253E003D945A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				768741242541DF4D009AD6DF /* Notee.xcdatamodeld */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		7687410F2541DF4D009AD6DF = {
 			isa = PBXGroup;
 			children = (
@@ -77,16 +102,15 @@
 		7687411A2541DF4D009AD6DF /* Notee */ = {
 			isa = PBXGroup;
 			children = (
-				768741342541DF6A009AD6DF /* CategoryTableViewController.swift */,
-				76E1284C2542E5D4000989DE /* NoteTableViewController.swift */,
-				768FBBD92543210800A881D2 /* SwipeCellViewController.swift */,
+				765A88F12547253E003D945A /* Models */,
+				765A88F02547252A003D945A /* Views */,
+				765A88EE25472512003D945A /* Controllers */,
 				7687411B2541DF4D009AD6DF /* AppDelegate.swift */,
+				768FBBD92543210800A881D2 /* SwipeCellViewController.swift */,
 				7687411D2541DF4D009AD6DF /* SceneDelegate.swift */,
-				768741212541DF4D009AD6DF /* Main.storyboard */,
 				768741272541DF4D009AD6DF /* Assets.xcassets */,
 				768741292541DF4D009AD6DF /* LaunchScreen.storyboard */,
 				7687412C2541DF4D009AD6DF /* Info.plist */,
-				768741242541DF4D009AD6DF /* Notee.xcdatamodeld */,
 			);
 			path = Notee;
 			sourceTree = "<group>";
