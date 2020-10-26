@@ -151,7 +151,7 @@ class NoteTableViewController: SwipeCellViewController {
                     newItem.parentCategory = self.selectedCategory
                     newItem.date = Date()
                 }
-                self.itemArray.append(newItem)
+                //self.itemArray.append(newItem)
             }
             
             self.saveItem()
