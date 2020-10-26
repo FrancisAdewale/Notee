@@ -11,6 +11,7 @@ import NRSpeechToText
 
 class NoteTableViewController: SwipeCellViewController {
     
+    @IBOutlet weak var stopRecording: UIBarButtonItem!
     
     //MARK: - Properties
     
@@ -27,9 +28,11 @@ class NoteTableViewController: SwipeCellViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         navigationItem.title = selectedCategory?.name
         
-        
+        stopRecording.style = .plain
     }
     
     
@@ -48,6 +51,8 @@ class NoteTableViewController: SwipeCellViewController {
         let item = itemArray[indexPath.row]
         cell.textLabel?.text = item.text
         cell.accessoryType = .detailButton
+        
+        
         
         return cell
     }
@@ -112,6 +117,7 @@ class NoteTableViewController: SwipeCellViewController {
         
         let recordAction = UIAlertAction(title: "Record Note", style: .default) { (recordActionButton) in
             
+            self.stopRecording.style = .done
             
             NRSpeechToText.shared.authorizePermission { (authorize) in
                 if authorize {
@@ -137,6 +143,17 @@ class NoteTableViewController: SwipeCellViewController {
         
     }
     
+    
+    @IBAction func stopRecordingPressed(_ sender: UIBarButtonItem) {
+        if NRSpeechToText.shared.isRunning {
+            NRSpeechToText.shared.stop()
+        }
+        loadItems()
+        
+        navigationItem.title = selectedCategory?.name
+        
+    }
+    
     func startRecording() {
         var textArray = [String]()
         let newItem = Item(context: self.context)
@@ -148,13 +165,16 @@ class NoteTableViewController: SwipeCellViewController {
                 if let text = result {
                     textArray.append(text)
                     newItem.text = textArray[textArray.count - 1]
+                    print(newItem.text!)
                     newItem.parentCategory = self.selectedCategory
                     newItem.date = Date()
                 }
-                //self.itemArray.append(newItem)
             }
-            
+            //self.itemArray.append(newItem)
+
             self.saveItem()
+            self.tableView.reloadData()
+
         }
         
 
