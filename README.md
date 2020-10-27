@@ -1,5 +1,5 @@
 # Notee
-A Notepad that can both write notes or record nores upon request. 
+A Notepad that can both write notes or record notes upon request. 
 
 ## Motivation
 I am new to Swift and an intermediate programmer. I am basically starting from easy projects and working my way up to medium, then harder projects. You get the drift.
